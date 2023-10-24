@@ -39,6 +39,19 @@ class LinkList {
         return temp;
     }
 
+    
+    unshift(value){
+        const newNode = new Node(value);
+        if(!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        newNode.next = this.head;
+        this.head = newNode;
+        this.length++;
+        return this;
+    }
+    
     shift() {
         if(!this.head) {
             return undefined;
@@ -50,18 +63,6 @@ class LinkList {
             this.tail = null;
         }
         return temp;
-    }
-
-    unshift(value){
-        const newNode = new Node(value);
-        if(!this.head) {
-            this.head = newNode;
-            this.tail = newNode;
-        }
-        newNode.next = this.head;
-        this.head = newNode;
-        this.length++;
-        return this;
     }
 
     get(index) {
@@ -114,9 +115,10 @@ class LinkList {
         if(index === 0) {
             return this.shift();
         }
-        let pre = this.get(index - 1);
-        let temp = pre.next;
-        pre.next = temp.next;
+        let before = this.get(index - 1);
+        let temp = before.next;
+        before.next = temp.next;
+        temp.next = null;
         this.length--;
         return temp;
     }
