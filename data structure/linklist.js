@@ -64,9 +64,81 @@ class LinkList {
         return this;
     }
 
+    get(index) {
+        if(index < 0 || index >= this.length) {
+            return undefined;
+        }
+        let temp = this.head;
+        for(let i = 0; i < index; i++) {
+            temp = temp.next;
+        }
+        return temp;
+    
+    }
+
+    set(index, value) {
+        let temp = this.get(index);
+        if(temp) {
+            temp.value = value;
+            return true;
+        }
+        return false;
+    
+    }
+    insert(index, value) {
+        if(index < 0 || index > this.length) {
+            return false;
+        }
+        if(index === this.length) {
+            return this.push(value);
+        }
+        if(index === 0) {
+            return this.unshift(value);
+        }
+        const newNode = new Node(value);
+        let pre = this.get(index - 1);
+        let temp = pre.next;
+        pre.next = newNode;
+        newNode.next = temp;
+        this.length++;
+        return true;
+    }
+
+    remove(index) {
+        if(index < 0 || index >= this.length) {
+            return undefined;
+        }
+        if(index === this.length - 1) {
+            return this.pop();
+        }
+        if(index === 0) {
+            return this.shift();
+        }
+        let pre = this.get(index - 1);
+        let temp = pre.next;
+        pre.next = temp.next;
+        this.length--;
+        return temp;
+    }
+
+    reverse() {
+        let temp = this.head;
+        this.head = this.tail;
+        this.tail = temp;
+        let pre = null;
+        let next = null;
+        for(let i = 0; i < this.length; i++) {
+            next = temp.next;
+            temp.next = pre;
+            pre = temp;
+            temp = next;
+        }
+        return this;
+    }
 
 }
 
 let myLinkedList = new LinkList(1);
-console.log(myLinkedList.push(2));
-console.log(myLinkedList.pop());
+myLinkedList.push(2);
+myLinkedList.push('hello');
+myLinkedList.push('world');
