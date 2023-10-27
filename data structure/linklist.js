@@ -138,7 +138,18 @@ class LinkList {
         return this;
     }
 
+   findMiddleNode() {
+        let slow = this.head;
+        let fast = this.head;
+        while(fast && fast.next) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
 }
+
+
 
 let myLinkedList = new LinkList(1);
 myLinkedList.push(2);
