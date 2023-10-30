@@ -147,6 +147,70 @@ class LinkList {
         }
         return slow;
     }
+
+    hasLoop() {
+        let slow = this.head;
+        let fast = this.head;
+        while(fast && fast.next) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow === fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    findKthFromEnd(k) {
+        let slow = this.head;
+        let fast = this.head;
+        for(let i = 0; i < k; i++) {
+            if(fast === null) {
+                return null;
+            }
+            fast = fast.next;
+
+            while(fast) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return slow;
+        }
+    }
+    partitionList(x) {
+        let beforeStart = null;
+        let beforeEnd = null;
+        let afterStart = null;
+        let afterEnd = null;
+        let temp = this.head;
+        while(temp) {
+            let next = temp.next;
+            temp.next = null;
+            if(temp.value < x) {
+                if(beforeStart === null) {
+                    beforeStart = temp;
+                    beforeEnd = beforeStart;
+                } else {
+                    beforeEnd.next = temp;
+                    beforeEnd = temp;
+                }
+            } else {
+                if(afterStart === null) {
+                    afterStart = temp;
+                    afterEnd = afterStart;
+                } else {
+                    afterEnd.next = temp;
+                    afterEnd = temp;
+                }
+            }
+            temp = next;
+        }
+        if(beforeStart === null) {
+            return afterStart;
+        }
+        beforeEnd.next = afterStart;
+        return beforeStart;
+    }
 }
 
 
